@@ -1,4 +1,4 @@
-﻿<Window x:Class="RSSReader.MainWindow"
+﻿<Window x:Class="RSSReader.FeedsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -13,16 +13,13 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="RSS Reader" Height="520" Width="1200" Loaded="Window_Loaded">
+        Title="FeedsWindow" Height="450" Width="600" Closing="Window_Closing">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.3*" Name="LeftBar" />
-            <ColumnDefinition Name="Content" />
-        </Grid.ColumnDefinitions>
-        <ListBox x:Name="LinksList" Grid.Column="0" 
-                 SelectionChanged="ListItemClick" Margin="0,0,0,40"></ListBox>
-        <Button Grid.Column="0" VerticalAlignment="Bottom" Content="Select feed" Width="135" HorizontalAlignment="Left" Click="SelectBtn_Click"/>
-        <Button Grid.Column="0" VerticalAlignment="Bottom" Content="Update" Width="135" HorizontalAlignment="Right" Click="UpdateBtn_Click"/>
-        <WebBrowser Grid.Column="1" x:Name="Browser"></WebBrowser>
+        <TextBox VerticalAlignment="Top" Height="30" 
+                 Width="450" HorizontalAlignment="Left" 
+                 Margin="10, 10, 0, 0" x:Name="InputBox" />
+        <Button Content="Add" VerticalAlignment="Top" HorizontalAlignment="Right"
+                Width="100" Height="30" Margin="0, 10, 10, 0" Click="AddBtn_Click" />
+        <ListBox Margin="0, 50, 0, 0" x:Name="FeedsBox" />
     </Grid>
 </Window>
