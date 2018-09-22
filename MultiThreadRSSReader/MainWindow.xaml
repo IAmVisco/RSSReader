@@ -13,32 +13,26 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="300" Width="600">
+        Title="Multi Thread RSS HYPERS" Height="300" Width="600">
     <Grid>
-        <Label Content="Threads" Margin="50, 20, 0, 0" VerticalAlignment="Top"
-                 HorizontalAlignment="Left"></Label>
-        <ComboBox Height="30" VerticalAlignment="Top" Name="threadAmount" Width="70" 
-                  HorizontalAlignment="Left" Margin="50, 50, 0, 0" HorizontalContentAlignment="Center">
-            <ComboBoxItem IsSelected="True" Content="2"></ComboBoxItem>
-            <ComboBoxItem Content="3"></ComboBoxItem>
-            <ComboBoxItem Content="4"></ComboBoxItem>
-        </ComboBox>
         <Label Content="Email" Margin="0, 20, 200, 0" VerticalAlignment="Top"
                  HorizontalAlignment="Right"></Label>
         <TextBox Text="sashok935@gmail.com" Width="200" Height="30" VerticalAlignment="Top"
-                 HorizontalAlignment="Right" Margin="0, 50, 50, 0" />
-        <Label Content="Feeds" Margin="50, 120, 0, 0" Height="30" VerticalAlignment="Top"
+                 HorizontalAlignment="Right" Margin="0, 50, 50, 0" x:Name="EmailField" />
+        <Label Content="Feeds" Margin="50, 20, 0, 0" Height="30" VerticalAlignment="Top"
                  HorizontalAlignment="Left"></Label>
         <Grid x:Name="checkboxGrid">
-            <CheckBox Content="/r/news" Margin="50, 140, 0, 0" Height="30" VerticalAlignment="Top"
+            <CheckBox Content="/r/news" Margin="50, 40, 0, 0" Height="30" VerticalAlignment="Top"
                      HorizontalAlignment="Left" />
-            <CheckBox Content="/r/pics" Margin="150, 140, 0, 0" Height="30" VerticalAlignment="Top"
+            <CheckBox Content="/r/pics" Margin="150, 40, 0, 0" Height="30" VerticalAlignment="Top"
                      HorizontalAlignment="Left" />
-            <CheckBox Content="/r/politics" Margin="50, 180, 0, 0" Height="30" VerticalAlignment="Top"
+            <CheckBox Content="/r/politics" Margin="50, 80, 0, 0" Height="30" VerticalAlignment="Top"
                      HorizontalAlignment="Left" />
-            <CheckBox Content="/r/memes" Margin="150, 180, 0, 0" Height="30" VerticalAlignment="Top"
+            <CheckBox Content="/r/memes" Margin="150, 80, 0, 0" Height="30" VerticalAlignment="Top"
                      HorizontalAlignment="Left" />
         </Grid>
         <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0, 0, 50, 50" Content="Go!" Click="GoBtn_Click" ></Button>
+        <Label Content="Alive..." x:Name="AliveLabel" Width="50" Height="30" VerticalAlignment="Top"
+                     HorizontalAlignment="Left"/>
     </Grid>
 </Window>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net.Mail;
 using System.ServiceModel.Syndication;
 using System.Text;
 using System.Threading;
@@ -25,6 +26,10 @@ namespace MultiThreadRSSReader
     public partial class MainWindow : Window
     {
         List<string> feeds = new List<string>();
+        List<Thread> threads = new List<Thread>();
+        bool anyAlive = true;
+        object locker = new object();
+        string body = "";
 
         public MainWindow()
         {
@@ -43,8 +48,25 @@ namespace MultiThreadRSSReader
                 foreach(var feed in feeds)
                 {
                     Thread th = new Thread(() => LoadFeed(feed));
+                    threads.Add(th);
                     th.Start();
                 }
+                while(anyAlive)
+                {
+                    anyAlive = false;
+                    foreach (var th in threads)
+                        if (th.IsAlive)
+                        {
+                            anyAlive = true;
+                            break;
+                        }
+                }
+                AliveLabel.Visibility = Visibility.Hidden;
+                SendEmail();
+            }
+            else
+            {
+                MessageBox.Show("Select at least one feed!");
             }
         }
         
@@ -56,12 +78,41 @@ namespace MultiThreadRSSReader
             {
                 content.Add(item.Title.Text, item.Links[0].Uri.AbsoluteUri);
             }
-            // TODO: Add sorting and lock combine
+            content.OrderBy(x => x.Key);
         }
 
         private void AddToFeeds(string subreddit)
         {
-            feeds.Add(String.Format("http://reddit{0}/.rss", subreddit));
+            feeds.Add(String.Format("http://reddit.com{0}/.rss", subreddit));
+        }
+
+        private void CombineContent(Dictionary<string, string> content)
+        {
+            lock (locker)
+            {
+                foreach (var pair in content)
+                {
+                    body += String.Format("{0}\n{1}\n", pair.Key, pair.Value);
+                }
+                Thread.CurrentThread.Abort();
+            }
+        }
+
+        private void SendEmail()
+        {
+            AliveLabel.Content = body;
+            MailMessage mail = new MailMessage("teamshisha1337@gmail.com", EmailField.Text);
+            SmtpClient client = new SmtpClient
+            {
+                Port = 25,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Host = "smtp.gmail.com",
+                Credentials = new System.Net.NetworkCredential("teamshisha1337@gmail.com", "password")
+            };
+            mail.Subject = "RSS Feed";
+            mail.Body = body;
+            client.Send(mail);
         }
     }
 }
