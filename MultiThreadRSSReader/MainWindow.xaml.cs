@@ -94,7 +94,7 @@ namespace MultiThreadRSSReader
         {
             lock (locker)
             {
-                body += "--------------------------------------------------------------";
+                body += "-------------------------------------------------------------------------------------------------------\n";
                 foreach (var pair in content)
                 {
                     body += String.Format("{0}\n{1}\n", pair.Key, pair.Value);
