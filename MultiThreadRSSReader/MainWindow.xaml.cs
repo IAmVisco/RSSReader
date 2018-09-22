@@ -45,13 +45,17 @@ namespace MultiThreadRSSReader
             }
             if (feeds.Count > 0)
             {
-                foreach(var feed in feeds)
+                foreach (var feed in feeds)
                 {
-                    Thread th = new Thread(() => LoadFeed(feed));
+                    Thread th = new Thread(() =>
+                    {
+                        Thread.CurrentThread.IsBackground = true;
+                        LoadFeed(feed);
+                    });
                     threads.Add(th);
                     th.Start();
                 }
-                while(anyAlive)
+                while (anyAlive)
                 {
                     anyAlive = false;
                     foreach (var th in threads)
@@ -78,7 +82,7 @@ namespace MultiThreadRSSReader
             {
                 content.Add(item.Title.Text, item.Links[0].Uri.AbsoluteUri);
             }
-            content.OrderBy(x => x.Key);
+            CombineContent(new SortedDictionary<string, string>(content));
         }
 
         private void AddToFeeds(string subreddit)
@@ -86,10 +90,11 @@ namespace MultiThreadRSSReader
             feeds.Add(String.Format("http://reddit.com{0}/.rss", subreddit));
         }
 
-        private void CombineContent(Dictionary<string, string> content)
+        private void CombineContent(SortedDictionary<string, string> content)
         {
             lock (locker)
             {
+                body += "--------------------------------------------------------------";
                 foreach (var pair in content)
                 {
                     body += String.Format("{0}\n{1}\n", pair.Key, pair.Value);
@@ -101,17 +106,17 @@ namespace MultiThreadRSSReader
         private void SendEmail()
         {
             AliveLabel.Content = body;
-            MailMessage mail = new MailMessage("teamshisha1337@gmail.com", EmailField.Text);
+            MailMessage mail = new MailMessage("sashok935@gmail.com", EmailField.Text, "RSS Feed", body);
             SmtpClient client = new SmtpClient
             {
-                Port = 25,
+                Port = 587,
+                Host = "smtp.gmail.com",
+                EnableSsl = true,
+                Timeout = 3000,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
-                Host = "smtp.gmail.com",
-                Credentials = new System.Net.NetworkCredential("teamshisha1337@gmail.com", "password")
+                Credentials = new System.Net.NetworkCredential("sashok935@gmail.com", "flzwihdhnzlbnzae")
             };
-            mail.Subject = "RSS Feed";
-            mail.Body = body;
             client.Send(mail);
         }
     }
