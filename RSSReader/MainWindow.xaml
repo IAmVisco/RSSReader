@@ -13,14 +13,14 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="RSS Reader" Height="720" Width="1200" Loaded="Window_Loaded">
+        Title="RSS Reader Manko" Height="720" Width="1280" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.3*" Name="LeftBar" />
             <ColumnDefinition Name="Content" />
         </Grid.ColumnDefinitions>
         <ListBox x:Name="LinksList" Grid.Column="0" 
-                 SelectionChanged="ListItemClick" Margin="0,0,0,30"></ListBox>
+                 SelectionChanged="ListItemClick" Margin="0,0,0,40"></ListBox>
         <Button Grid.Column="0" VerticalAlignment="Bottom" Content="Select feed" Width="135" HorizontalAlignment="Left" Click="SelectBtn_Click"/>
         <Button Grid.Column="0" VerticalAlignment="Bottom" Content="Update" Width="135" HorizontalAlignment="Right" Click="UpdateBtn_Click"/>
         <WebBrowser Grid.Column="1" x:Name="Browser"></WebBrowser>

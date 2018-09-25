@@ -65,7 +65,6 @@ namespace MultiThreadRSSReader
                             break;
                         }
                 }
-                AliveLabel.Visibility = Visibility.Hidden;
                 SendEmail();
             }
             else
@@ -105,7 +104,6 @@ namespace MultiThreadRSSReader
 
         private void SendEmail()
         {
-            AliveLabel.Content = body;
             MailMessage mail = new MailMessage("sashok935@gmail.com", EmailField.Text, "RSS Feed", body);
             SmtpClient client = new SmtpClient
             {
