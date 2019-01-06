@@ -104,7 +104,7 @@ namespace MultiThreadRSSReader
 
         private void SendEmail()
         {
-            MailMessage mail = new MailMessage("sashok935@gmail.com", EmailField.Text, "RSS Feed", body);
+            MailMessage mail = new MailMessage("recipient@gmail.com", EmailField.Text, "RSS Feed", body);
             SmtpClient client = new SmtpClient
             {
                 Port = 587,
@@ -113,7 +113,7 @@ namespace MultiThreadRSSReader
                 Timeout = 3000,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
-                Credentials = new System.Net.NetworkCredential("sashok935@gmail.com", "flzwihdhnzlbnzae")
+                Credentials = new System.Net.NetworkCredential("your@gmail.com", "your_16_symbol_gmail_access_token")
             };
             client.Send(mail);
         }
